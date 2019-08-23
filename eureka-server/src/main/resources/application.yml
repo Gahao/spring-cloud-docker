@@ -1,0 +1,18 @@
+server:
+  port: 8761
+spring:
+  application:
+    name: eureka-server
+eureka:
+  instance:
+    hostname: localhost
+    preferIpAddress: true
+  client:
+    service-url:
+      defaultZone: http://${eureka.instance.hostname}:${server.port}/eureka/
+    fetch-registry: false
+    register-with-eureka: true
+    eureka-service-url-poll-interval-seconds: 30 #默认为300秒，这里为了验证改为5秒
+  server:
+    waitTimeInMsWhenSyncEmpty: 0
+    enableSelfPreservation: false

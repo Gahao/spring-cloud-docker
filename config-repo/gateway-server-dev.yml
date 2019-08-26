@@ -1,0 +1,14 @@
+spring:
+  cloud:
+    gateway:
+      discovery:
+        locator:
+          enabled: false
+          lowerCaseServiceId: true
+      routes:
+        - id: gateway-demo
+          uri: lb://GATEWAY-DEMO
+          predicates:
+            - Path=/demo/**
+          filters:
+            - StripPrefix=1

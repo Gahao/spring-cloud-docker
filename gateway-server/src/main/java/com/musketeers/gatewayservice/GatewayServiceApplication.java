@@ -19,7 +19,7 @@ public class GatewayServiceApplication {
 	@Value("${version}")
 	String version;
 	@RequestMapping(value = "/version")
-	public String hi(){
+	public String version(){
 		return version;
 	}
 

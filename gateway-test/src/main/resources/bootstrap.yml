@@ -1,5 +1,10 @@
 server:
-  port: 8888
+ port: 8888
 spring:
-  application:
-    name: gateway-demo
+ application:
+  name: gateway-demo
+ cloud:
+  config:
+   uri: http://localhost:9999/
+   profile: dev
+   label: master

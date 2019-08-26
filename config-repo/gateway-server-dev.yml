@@ -1,3 +1,4 @@
+version: 0.0.1
 spring:
   cloud:
     gateway:
@@ -12,3 +13,7 @@ spring:
             - Path=/demo/**
           filters:
             - StripPrefix=1
+eureka:
+  client:
+    serviceUrl:
+      defaultZone: http://47.107.169.185:8761/eureka/

@@ -13,8 +13,6 @@ spring:
           username: Gahao
           password: 603415477
 eureka:
-  instance:
-    prefer-ip-address: true
   client:
     service-url:
       defaultZone: http://47.107.169.185:8761/eureka

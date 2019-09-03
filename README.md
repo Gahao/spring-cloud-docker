@@ -2,9 +2,13 @@
 spring-cloud的docker版本
 
 ## 项目架构
-* 总目录
-    * Eureka注册中心
-    * GateWay网关
+
+| 模块名称 | 端口 | 服务名 |
+|:-----|:---|:----|
+|Eureka注册中心|8761|eureka-server|
+|GateWay网关|6604|gateway-server|
+|统一配置中心|9999|config-server|
+    
     
 ## 参考资料
 [SpringCloud参考资源](https://blog.csdn.net/forezp/article/details/70148833)

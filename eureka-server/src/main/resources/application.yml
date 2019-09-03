@@ -12,7 +12,7 @@ eureka:
       defaultZone: http://${eureka.instance.hostname}:${server.port}/eureka/
     fetch-registry: false
     register-with-eureka: true
-    eureka-service-url-poll-interval-seconds: 30 #默认为300秒，这里为了验证改为5秒
+    eureka-service-url-poll-interval-seconds: 30
   server:
     waitTimeInMsWhenSyncEmpty: 0
     enableSelfPreservation: false

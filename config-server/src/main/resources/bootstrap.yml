@@ -1,7 +1,9 @@
 server:
   port: 9999
 
+---
 spring:
+  profiles: prod
   application:
     name: config-server
   cloud:
@@ -16,11 +18,17 @@ eureka:
   client:
     service-url:
       defaultZone: http://47.107.169.185:8761/eureka
-management:
-  endpoints:
-    web:
-      exposure:
-        include: "*"
-  endpoint:
-    health:
-      show-details: ALWAYS
+---
+spring:
+  profiles: native
+  application:
+    name: config-server
+  cloud:
+    config:
+      server:
+        native:
+          search-locations: file:/D:/Gahao/workspace/code/后台/spring-cloud-docker/config-repo
+eureka:
+  client:
+    service-url:
+      defaultZone: http://127.0.0.1:8761/eureka

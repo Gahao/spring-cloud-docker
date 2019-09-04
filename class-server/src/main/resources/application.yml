@@ -1,1 +1,18 @@
+spring:
+  datasource:
+    driver-class-name: com.mysql.jdbc.Driver
+    url: jdbc:mysql://47.107.169.185:3306/website?useUnicode=true&characterEncoding=utf-8&zeroDateTimeBehavior=convertToNull&allowMultiQueries=true
+    username: admin
+    password: admin
 
+#=======MyBatis Plus 配置=======#
+#是否开启刷新线程
+enabled: true
+  #延迟启动刷新程序的秒数
+delaySeconds: 30
+  #刷新扫描间隔的时长秒数
+sleepSeconds: 10
+  #扫描Mapper文件的资源路径
+mappingPath: classpath:xml/**/*.xml
+  #session过期时间（秒）
+info.MaxInactiveInterval: 10800

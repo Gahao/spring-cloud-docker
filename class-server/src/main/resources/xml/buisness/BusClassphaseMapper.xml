@@ -1,0 +1,60 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.musketeers.classserver.business.mapper.BusClassphaseMapper">
+
+    <select id="getClassphaseByClassid" resultType="BusClassphase" parameterType="int">
+        select * from bus_classphase t where t.classID = #{classID}
+    </select>
+
+    <select id="getClassphaseByPhaseid" resultType="BusClassphase" parameterType="int">
+        select * from bus_classphase t where t.phaseid = #{phaseid}
+    </select>
+
+    <insert id ="insertClassphase" parameterType="java.util.List" >
+        insert into bus_classphase
+        (phaseno, classid, begindate, enddate, contain)
+        values
+        <foreach collection ="busClassphaseList" item="BusClassphase" index= "index" separator =",">
+            (
+            #{BusClassphase.phaseno},
+            #{BusClassphase.classid},
+            #{BusClassphase.begindate},
+            #{BusClassphase.enddate},
+            #{BusClassphase.contain}
+            )
+        </foreach >
+    </insert >
+
+    <update id ="updateClassphase" parameterType="java.util.List" >
+        <foreach collection="busClassphaseList" item="BusClassphase" index="index" open="" close="" separator=";">
+            update bus_classphase
+            <set>
+                phaseno=#{BusClassphase.phaseno},
+                begindate=#{BusClassphase.begindate},
+                enddate=#{BusClassphase.enddate},
+                contain=#{BusClassphase.contain}
+            </set>
+            where phaseid = #{BusClassphase.phaseid}
+        </foreach>
+    </update>
+
+    <update id ="updateClassphaseByID" parameterType="BusClassphase" >
+        update bus_classphase
+        <set>
+            phaseno=#{phaseno},
+            begindate=#{begindate},
+            enddate=#{enddate},
+            contain=#{contain}
+        </set>
+        where phaseid = #{phaseid}
+    </update>
+
+    <delete id ="deleteClassphaseByID" parameterType="BusClassphase" >
+        delete from bus_classphase where phaseid = #{phaseid}
+    </delete>
+
+    <insert id ="insertClassphaseByID" parameterType="BusClassphase" >
+        insert into bus_classphase (phaseno, classid,begindate,enddate,contain,signup) values (#{phaseno},#{classid},#{begindate},#{enddate},#{contain},0)
+    </insert>
+
+</mapper>

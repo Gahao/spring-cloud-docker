@@ -75,7 +75,7 @@ public class MybatisPlusConfig {
     @Bean
     public static MapperScannerConfigurer mapperScannerConfigurer() {
         MapperScannerConfigurer configurer = new MapperScannerConfigurer();
-        configurer.setBasePackage("com.musketeers.background");
+        configurer.setBasePackage("com.musketeers.classserver");
         // 设置为上面的 factory name
         configurer.setSqlSessionFactoryBeanName("mybatisSqlSessionFactoryBean");
         return configurer;
@@ -105,7 +105,7 @@ public class MybatisPlusConfig {
     @Bean
     public MybatisSqlSessionFactoryBean mybatisSqlSessionFactoryBean(
             DruidDataSource dataSource,
-            GlobalConfig globalConfig) throws Exception,IOException {
+            GlobalConfig globalConfig) throws Exception {
         MybatisSqlSessionFactoryBean sqlSessionFactoryBean = new MybatisSqlSessionFactoryBean();
         sqlSessionFactoryBean.setDataSource(dataSource);
         sqlSessionFactoryBean.setGlobalConfig(globalConfig);
@@ -122,13 +122,13 @@ public class MybatisPlusConfig {
         ResourcePatternResolver resourcePatternResolver = new PathMatchingResourcePatternResolver();
         sqlSessionFactoryBean.setDataSource(dataSource());//数据源
         sqlSessionFactoryBean.setMapperLocations(resourcePatternResolver.getResources(mappingPath));
-        sqlSessionFactoryBean.setTypeAliasesPackage("com.musketeers.background");//别名，让*Mpper.xml实体类映射可以不加上具体包名
+        sqlSessionFactoryBean.setTypeAliasesPackage("com.musketeers.classserver");//别名，让*Mpper.xml实体类映射可以不加上具体包名
         return sqlSessionFactoryBean;
     }
 
     @Bean
     public MybatisMapperRefresh mybatisMapperRefresh(MybatisSqlSessionFactoryBean mybatisSqlSessionFactoryBean)
-            throws Exception,IOException {
+            throws Exception {
         ResourcePatternResolver resourcePatternResolver = new PathMatchingResourcePatternResolver();
         MybatisMapperRefresh mybatisMapperRefresh = new MybatisMapperRefresh(
                 resourcePatternResolver.getResources(mappingPath),

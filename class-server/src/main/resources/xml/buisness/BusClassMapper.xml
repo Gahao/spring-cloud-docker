@@ -1,0 +1,84 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.musketeers.classserver.business.mapper.BusClassMapper">
+    <resultMap id="simpleClassList" type="java.util.HashMap">
+        <id column="classid" property="classid" jdbcType="INTEGER" />
+        <result column="classname" property="classname" jdbcType="VARCHAR" />
+        <result column="unitprice" property="unitprice" jdbcType="DECIMAL" />
+        <result column="info" property="info" jdbcType="VARCHAR" />
+        <result column="status" property="status" jdbcType="VARCHAR" />
+        <result column="useroriented" property="useroriented" jdbcType="VARCHAR" />
+        <result column="type" property="type" jdbcType="VARCHAR" />
+        <result column="theme" property="theme" jdbcType="VARCHAR" />
+        <result column="createtime" property="createtime" jdbcType="DATE" />
+        <result column="location" property="location" jdbcType="VARCHAR" />
+    </resultMap>
+
+    <resultMap  id="ClassList" type="com.musketeers.common.entity.business.BusClass">
+        <id column="classid" property="classid" jdbcType="INTEGER" />
+        <result column="classname" property="classname" jdbcType="VARCHAR" />
+        <result column="unitprice" property="unitprice" jdbcType="DECIMAL" />
+        <result column="info" property="info" jdbcType="VARCHAR" />
+        <result column="status" property="status" jdbcType="VARCHAR" />
+        <result column="useroriented" property="useroriented" jdbcType="VARCHAR" />
+        <result column="type" property="type" jdbcType="VARCHAR" />
+        <result column="theme" property="theme" jdbcType="VARCHAR" />
+        <result column="content" property="content" jdbcType="VARCHAR" />
+        <result column="rawcontent" property="rawcontent" jdbcType="VARCHAR" />
+        <result column="createtime" property="createtime" jdbcType="TIMESTAMP" />
+        <result column="publishtime" property="publishtime" jdbcType="TIMESTAMP" />
+        <result column="location" property="location" jdbcType="VARCHAR" />
+        <association property="busClassphaseList" select="com.musketeers.classserver.business.mapper.BusClassphaseMapper.getClassphaseByClassid"
+                     column="classid">
+        </association>
+    </resultMap>
+    <sql id="classInfo">
+        classname,unitprice,info,status,useroriented,type,theme,imgURL,content,rawcontent,location,createtime,publishtime,days
+    </sql>
+    <sql id="simpleclassInfo">
+        classid,classname,unitprice,info,status,useroriented,type,theme,location,createtime,publishtime
+    </sql>
+    <update id="increaseFocus" parameterType="int">
+		update bus_class set focus=focus+1 WHERE classid=#{classID}
+    </update>
+    <select id="getClassByID" resultMap="ClassList" parameterType="int">
+        select * from bus_class t where t.classid=#{classID}
+    </select>
+    <select id="querySummeryBusClass" resultType="com.musketeers.common.entity.business.BusClass" parameterType="com.baomidou.mybatisplus.core.conditions.query.QueryWrapper">
+        select <include refid="simpleclassInfo"/> from bus_class <where> ${ew.sqlSegment}</where> order by createtime desc
+    </select>
+    <insert id="insertNewClass" parameterType="com.musketeers.common.entity.business.BusClass">
+        insert into bus_class (<include refid="classInfo"/>)
+        values (#{classname},#{unitprice},#{info},#{status},#{useroriented},#{type},#{theme},#{imgURL},#{content},#{rawcontent},#{location},#{createtime},#{publishtime},#{days})
+        <selectKey resultType="int" keyProperty="classid" >
+            SELECT @@IDENTITY
+        </selectKey>
+    </insert>
+    <update id="updateClass" parameterType="com.musketeers.common.entity.business.BusClass">
+        UPDATE bus_class
+        <trim prefix="set" suffixOverrides=",">
+            <if test="classname!=null">classname=#{classname},</if>
+            <if test="unitprice!=null">unitprice=#{unitprice},</if>
+            <if test="info!=null">info=#{info},</if>
+            <if test="status!=null">status=#{status},</if>
+            <if test="useroriented!=null">useroriented=#{useroriented},</if>
+            <if test="type!=null">type=#{type},</if>
+            <if test="theme!=null">theme=#{theme},</if>
+            <if test="imgURL!=null">imgURL=#{imgURL},</if>
+            <if test="content!=null">content=#{content},</if>
+            <if test="rawcontent!=null">rawcontent=#{rawcontent},</if>
+            <if test="location!=null">location=#{location},</if>
+            <if test="days!=null">days=#{days},</if>
+            publishtime=#{publishtime}
+        </trim>
+        WHERE classid=#{classid}
+    </update>
+    <update id="alterStatus" parameterType="com.musketeers.common.entity.business.BusClass">
+        UPDATE bus_class
+        <trim prefix="set" suffixOverrides=",">
+            <if test="status!=null">status=#{status},</if>
+            publishtime=#{publishtime}
+        </trim>
+        WHERE classid=#{classid}
+    </update>
+</mapper>

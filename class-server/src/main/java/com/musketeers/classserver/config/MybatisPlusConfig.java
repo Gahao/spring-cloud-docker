@@ -17,7 +17,6 @@ import org.springframework.context.annotation.Configuration;
 import org.springframework.core.io.support.PathMatchingResourcePatternResolver;
 import org.springframework.core.io.support.ResourcePatternResolver;
 
-import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -27,11 +26,6 @@ import java.util.List;
 @Configuration
 @Slf4j
 public class MybatisPlusConfig {
-
-    // 环境标志, 区分dev or prod
-    @Value("${spring.profiles.active}")
-    private String projectStage;
-
     /**
      * 数据源a 相关信息
      */
@@ -92,10 +86,9 @@ public class MybatisPlusConfig {
         // 手动指定db 的类型, 这里是mysql
         dbConfig.setDbType(DbType.MYSQL);
         globalConfig.setDbConfig(dbConfig);
-        if (projectStage.equals("dev")) {
-            // 如果是dev环境,则使用 reload xml的功能,方便调试
-            globalConfig.setRefresh(true);
-        }
+        // 如果是dev环境,则使用 reload xml的功能,方便调试
+        globalConfig.setRefresh(true);
+
         // 逻辑删除注入器
         //LogicSqlInjector injector = new LogicSqlInjector();
         //globalConfig.setSqlInjector(injector);
@@ -113,7 +106,6 @@ public class MybatisPlusConfig {
         PaginationInterceptor paginationInterceptor = new PaginationInterceptor();
         // 设置分页插件
         interceptors.add(paginationInterceptor);
-        log.info("##############  目前运行环境为 " + projectStage + "  ##############");
         // 如果是dev环境,打印出sql, 设置sql拦截插件, prod环境不要使用, 会影响性能
         PerformanceInterceptor performanceInterceptor = new PerformanceInterceptor();
         interceptors.add(performanceInterceptor);

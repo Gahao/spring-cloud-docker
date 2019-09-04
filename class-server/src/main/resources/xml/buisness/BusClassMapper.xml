@@ -14,7 +14,7 @@
         <result column="location" property="location" jdbcType="VARCHAR" />
     </resultMap>
 
-    <resultMap  id="ClassList" type="BusClass">
+    <resultMap  id="ClassList" type="com.musketeers.common.entity.business.BusClass">
         <id column="classid" property="classid" jdbcType="INTEGER" />
         <result column="classname" property="classname" jdbcType="VARCHAR" />
         <result column="unitprice" property="unitprice" jdbcType="DECIMAL" />
@@ -44,17 +44,17 @@
     <select id="getClassByID" resultMap="ClassList" parameterType="int">
         select * from bus_class t where t.classid=#{classID}
     </select>
-    <select id="querySummeryBusClass" resultType="BusClass" parameterType="com.baomidou.mybatisplus.core.conditions.query.QueryWrapper">
+    <select id="querySummeryBusClass" resultType="com.musketeers.common.entity.business.BusClass" parameterType="com.baomidou.mybatisplus.core.conditions.query.QueryWrapper">
         select <include refid="simpleclassInfo"/> from bus_class <where> ${ew.sqlSegment}</where> order by createtime desc
     </select>
-    <insert id="insertNewClass" parameterType="BusClass">
+    <insert id="insertNewClass" parameterType="com.musketeers.common.entity.business.BusClass">
         insert into bus_class (<include refid="classInfo"/>)
         values (#{classname},#{unitprice},#{info},#{status},#{useroriented},#{type},#{theme},#{imgURL},#{content},#{rawcontent},#{location},#{createtime},#{publishtime},#{days})
         <selectKey resultType="int" keyProperty="classid" >
             SELECT @@IDENTITY
         </selectKey>
     </insert>
-    <update id="updateClass" parameterType="BusClass">
+    <update id="updateClass" parameterType="com.musketeers.common.entity.business.BusClass">
         UPDATE bus_class
         <trim prefix="set" suffixOverrides=",">
             <if test="classname!=null">classname=#{classname},</if>
@@ -73,7 +73,7 @@
         </trim>
         WHERE classid=#{classid}
     </update>
-    <update id="alterStatus" parameterType="BusClass">
+    <update id="alterStatus" parameterType="com.musketeers.common.entity.business.BusClass">
         UPDATE bus_class
         <trim prefix="set" suffixOverrides=",">
             <if test="status!=null">status=#{status},</if>

@@ -1,10 +1,10 @@
-server:
- port: 8080
-spring:
- application:
-  name: class-server
- cloud:
-  config:
-   uri: http://localhost:9999/
-   profile: dev
-   label: master
+#server:
+# port: 8080
+#spring:
+# application:
+#  name: class-server
+# cloud:
+#  config:
+#   uri: http://localhost:9999/
+#   profile: dev
+#   label: master

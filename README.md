@@ -12,6 +12,8 @@ spring-cloud的docker版本
 ## 注意事项
 common模块在其他模块调用打包前需要install
     
+## 系统架构 2019-09-05
+![系统架构 2019-09-05](pic/System.jpg)
     
 ## 参考资料
 [SpringCloud参考资源](https://blog.csdn.net/forezp/article/details/70148833)

@@ -1,2 +1,6 @@
+server:
+  port: 8761
 spring:
   profiles: @profileActive@
+  application:
+    name: eureka-server

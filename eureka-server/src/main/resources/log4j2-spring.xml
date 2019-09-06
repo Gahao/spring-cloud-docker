@@ -1,0 +1,113 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Configuration>
+    <properties>
+        <property name="LOG_HOME">/datalogs</property>
+        <property name="SERVER_NAME">eureka-server</property>
+    </properties>
+    <Appenders>
+        <!--*********************控制台日志***********************-->
+        <Console name="consoleAppender" target="SYSTEM_OUT">
+            <!--设置日志格式及颜色-->
+            <PatternLayout
+                    pattern="[%style{%d}][%style{%t}][%style{%C}{cyan}]: %msg%n%style{%throwable}{red}"
+                    disableAnsi="false" noConsoleNoAnsi="false"/>
+        </Console>
+
+        <!--*********************文件日志***********************-->
+        <!--debug级别日志-->
+        <RollingFile name="debugFileAppender"
+                     fileName="${LOG_HOME}/${SERVER_NAME}/debug.log"
+                     filePattern="${LOG_HOME}/${SERVER_NAME}/$${date:yyyy-MM}/debug-%d{yyyy-MM-dd}-%i.log.gz">
+            <Filters>
+                <!--过滤掉info及更高级别日志-->
+                <ThresholdFilter level="info" onMatch="DENY" onMismatch="NEUTRAL"/>
+            </Filters>
+            <!--设置日志格式-->
+            <PatternLayout>
+                <pattern>%d %p %C{1.} [%t] %m%n</pattern>
+            </PatternLayout>
+            <Policies>
+                <!-- 设置日志文件切分参数 -->
+                <!--<OnStartupTriggeringPolicy/>-->
+                <SizeBasedTriggeringPolicy size="10 MB"/>
+                <TimeBasedTriggeringPolicy/>
+            </Policies>
+        </RollingFile>
+
+        <!--info级别日志-->
+        <RollingFile name="infoFileAppender"
+                     fileName="${LOG_HOME}/${SERVER_NAME}/info.log"
+                     filePattern="${LOG_HOME}/${SERVER_NAME}/$${date:yyyy-MM}/info-%d{yyyy-MM-dd}-%i.log.gz">
+            <Filters>
+                <!--过滤掉warn及更高级别日志-->
+                <ThresholdFilter level="warn" onMatch="DENY" onMismatch="NEUTRAL"/>
+            </Filters>
+            <!--设置日志格式-->
+            <PatternLayout>
+                <pattern>%d %p %C{1.} [%t] %m%n</pattern>
+            </PatternLayout>
+            <Policies>
+                <!-- 设置日志文件切分参数 -->
+                <!--<OnStartupTriggeringPolicy/>-->
+                <SizeBasedTriggeringPolicy size="10 MB"/>
+                <TimeBasedTriggeringPolicy/>
+            </Policies>
+        </RollingFile>
+
+        <!--warn级别日志-->
+        <RollingFile name="warnFileAppender"
+                     fileName="${LOG_HOME}/${SERVER_NAME}/warn.log"
+                     filePattern="${LOG_HOME}/${SERVER_NAME}/$${date:yyyy-MM}/warn-%d{yyyy-MM-dd}-%i.log.gz">
+            <Filters>
+                <!--过滤掉error及更高级别日志-->
+                <ThresholdFilter level="error" onMatch="DENY" onMismatch="NEUTRAL"/>
+            </Filters>
+            <!--设置日志格式-->
+            <PatternLayout>
+                <pattern>%d %p %C{1.} [%t] %m%n</pattern>
+            </PatternLayout>
+            <Policies>
+                <!-- 设置日志文件切分参数 -->
+                <!--<OnStartupTriggeringPolicy/>-->
+                <SizeBasedTriggeringPolicy size="10 MB"/>
+                <TimeBasedTriggeringPolicy/>
+            </Policies>
+        </RollingFile>
+
+        <!--error及更高级别日志-->
+        <RollingFile name="errorFileAppender"
+                     fileName="${LOG_HOME}/${SERVER_NAME}/error.log"
+                     filePattern="${LOG_HOME}/${SERVER_NAME}/$${date:yyyy-MM}/error-%d{yyyy-MM-dd}-%i.log.gz">
+            <!--设置日志格式-->
+            <PatternLayout>
+                <pattern>%d %p %C{1.} [%t] %m%n</pattern>
+            </PatternLayout>
+            <Policies>
+                <!-- 设置日志文件切分参数 -->
+                <!--<OnStartupTriggeringPolicy/>-->
+                <SizeBasedTriggeringPolicy size="10 MB"/>
+                <TimeBasedTriggeringPolicy/>
+            </Policies>
+        </RollingFile>
+
+    </Appenders>
+
+    <Loggers>
+        <!-- 根日志设置 -->
+        <Root level="debug">
+            <AppenderRef ref="consoleAppender" level="info"/>
+            <AppenderRef ref="debugFileAppender" level="debug"/>
+            <AppenderRef ref="infoFileAppender" level="info"/>
+            <AppenderRef ref="warnFileAppender" level="warn"/>
+            <AppenderRef ref="errorFileAppender" level="error"/>
+        </Root>
+
+        <!--spring日志-->
+        <!--<Logger name="org.springframework" level="info"/>-->
+        <!--druid数据源日志-->
+        <!--<Logger name="druid.sql.Statement" level="warn"/>-->
+        <!-- mybatis日志 -->
+        <!--<Logger name="com.mybatis" level="warn"/>-->
+    </Loggers>
+
+</Configuration>

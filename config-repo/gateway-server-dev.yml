@@ -1,19 +1,19 @@
-version: 0.0.1
-spring:
-  cloud:
-    gateway:
-      discovery:
-        locator:
-          enabled: false
-          lowerCaseServiceId: true
-      routes:
-        - id: gateway-demo
-          uri: lb://GATEWAY-DEMO
-          predicates:
-            - Path=/demo/**
-          filters:
-            - StripPrefix=1
-eureka:
-  client:
-    serviceUrl:
-      defaultZone: http://47.107.169.185:8761/eureka/
+#version: 0.0.1
+#spring:
+#  cloud:
+#    gateway:
+#      discovery:
+#        locator:
+#          enabled: false
+#          lowerCaseServiceId: true
+#      routes:
+#        - id: gateway-demo
+#          uri: lb://GATEWAY-DEMO
+#          predicates:
+#            - Path=/demo/**
+#          filters:
+#            - StripPrefix=1
+#eureka:
+#  client:
+#    serviceUrl:
+#      defaultZone: http://47.107.169.185:8761/eureka/

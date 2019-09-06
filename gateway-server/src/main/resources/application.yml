@@ -1,1 +1,6 @@
-
+server:
+  port: 6604
+spring:
+  profiles: @profileActive@
+  application:
+    name: gateway-server

@@ -26,6 +26,12 @@
 			</activation>
 		</profile>
 		<profile>
+			<id>dev</id>
+			<properties>
+				<profileActive>dev</profileActive>
+			</properties>
+		</profile>
+		<profile>
 			<id>prod</id>
 			<properties>
 				<profileActive>prod</profileActive>
@@ -43,6 +49,21 @@
 		<dependency>
 			<groupId>org.springframework.boot</groupId>
 			<artifactId>spring-boot-starter-web</artifactId>
+			<exclusions><!-- 去掉springboot默认配置 -->
+				<exclusion>
+					<groupId>org.springframework.boot</groupId>
+					<artifactId>spring-boot-starter-logging</artifactId>
+				</exclusion>
+			</exclusions>
+		</dependency>
+
+		<dependency> <!-- 引入log4j2依赖 -->
+			<groupId>org.springframework.boot</groupId>
+			<artifactId>spring-boot-starter-log4j2</artifactId>
+		</dependency>
+		<dependency>
+			<groupId>org.projectlombok</groupId>
+			<artifactId>lombok</artifactId>
 		</dependency>
 		<dependency>
 			<groupId>org.springframework.cloud</groupId>
@@ -83,14 +104,14 @@
 					<!--<dockerDirectory>src/main/docker</dockerDirectory>-->
 					<dockerHost>http://47.107.169.185:2375</dockerHost>
 					<baseImage>java:8</baseImage>
-					<entryPoint>["java", "-jar", "/${project.build.finalName}.jar"]</entryPoint>
+					<exposes>8761</exposes>
+					<entryPoint>["java", "-jar", "/${project.build.finalName}.jar", "--spring.profiles.active=${profileActive}"]</entryPoint>
 					<resources>
 						<resource>
 							<directory>${project.build.directory}</directory>
 							<targetPath>/</targetPath>
 							<include>${project.build.finalName}.jar</include>
 						</resource>
-
 					</resources>
 				</configuration>
 			</plugin>
@@ -105,6 +126,7 @@
 					<!-- 打包时排除文件，可自行添加test.yml -->
 					<exclude>application.yml</exclude>
 					<exclude>application-native.yml</exclude>
+					<exclude>application-dev.yml</exclude>
 					<exclude>application-prod.yml</exclude>
 				</excludes>
 			</resource>
